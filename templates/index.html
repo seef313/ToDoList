@@ -1,0 +1,29 @@
+
+
+<html>
+    <body style="background-color: rgb(156, 236, 105)">
+        <div class="label">
+                <h1> TODO App...</h1>
+
+                
+                
+                <form action="/task" method="post">
+                    <p><input type="text" name="item"></p>
+                    <input type="submit" value="Add task">
+                </form>
+                
+                
+                
+                
+                <ol>
+                    {% for task in tasks %}
+                        <li>
+                            {% if task.done %} <strike> {% endif %}{{ task.item }} {% if task.done %} </strike>{% endif %}
+                            <a href="/done/{{ task.id }}">Done</a>
+                            <a href="/delete/{{ task.id }}">Delete</a>
+                        </li>
+                    {% endfor %}
+                </ol>
+            </div>
+    </body>
+</html>
