@@ -11,7 +11,7 @@ Ability to order to-dos
 
 Marking to-dos as complete
 '''
-
+import models
 from flask import Flask, redirect, url_for, render_template, request
 from models import db, ToDO
 
@@ -21,14 +21,14 @@ app.config['SECRET_KEY'] = '\x14B~^\x07\xe1\x197\xda\x18\xa6[[\x05\x03QVg\xce%\x
 app.config['DEBUG'] = True
 
 # Database
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///book.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///book.sqlite'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db.init_app(app)
 db.create_all()
 
 
-tasks = ToDO.query.all()
+todo = models.ToDO(db.Model)
 
 #print(tasks)
 @app.route("/")
@@ -36,9 +36,12 @@ def index():
     '''
     Home page
     ''' 
-    
-    return render_template('index.html')
+    #tasks = models.ToDO(db.Model)
+
+    tasks = models.ToDO(db.Model).query.all()
+    return render_template('index.html',tasks=tasks)
     #return "Hello World"
+
 
 
 @app.route('/task', methods=['POST'])

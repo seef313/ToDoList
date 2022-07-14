@@ -28,7 +28,7 @@ db.create_all()
 @app.route('/')
 def tasks_list():
     tasks = Task.query.all()
-    return render_template('index.html', tasks=tasks)
+    return render_template('list.html', tasks=tasks)
 
 
 @app.route('/task', methods=['POST'])

@@ -20,7 +20,7 @@ db = SQLAlchemy(app)
     #pass
 
 class ToDO(db.Model):
-    #__tablename__ = 'tasks'
+    __tablename__ = 'toDO'
     id = db.Column(db.Integer, primary_key=True)
     item = db.Column(db.String(100))  
     complete = db.Column(db.Boolean)
