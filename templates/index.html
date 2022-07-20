@@ -1,29 +1,53 @@
-
-
 <html>
-    <body style="background-color: rgb(156, 236, 105)">
-        <div class="label">
-                <h1> TODO App...</h1>
 
-                
-                
-                <form action="/task" method="post">
-                    <p><input type="text" name="item"></p>
-                    <input type="submit" value="Add task">
-                </form>
-                
-                
-                
-                
-                <ol>
-                    {% for task in tasks %}
-                        <li>
-                            {% if task.done %} <strike> {% endif %}{{ task.item }} {% if task.done %} </strike>{% endif %}
-                            <a href="/done/{{ task.id }}">Done</a>
-                            <a href="/delete/{{ task.id }}">Delete</a>
-                        </li>
-                    {% endfor %}
-                </ol>
-            </div>
-    </body>
+<head>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/bootstrap.min.css')}}">
+</head>
+<script src="{{url_for('static', filename='js/bootstrap.min.js')}}"></script>
+
+<body style="background-color: rgba(210, 144, 44, 0.67)">
+
+    <div class="label">
+        <h1> TODO App...</h1>
+        <form action="/task" method="post">
+            <label for="item">Task:</label>
+            <p><input type="text" name="item" size="50"></p>
+            <label for="dueDate">Due Date</label>
+            <p><input type="text" name="dueDate"></p>
+            <input type="submit" value="Add task">
+        </form>
+
+
+
+        <h2>Displaying tasks for :: {{tasks[0].taskList.username}} </h2>
+
+        <ol>
+            <li>| --- Tasks --- | --- Due Date --- | --- Assignee --- | --- Actions --- |</li>
+            <h4>------------------------------------------------------ </h4>
+
+            {% for task in tasks %}
+            <li>
+                {% if task.done %}
+                <strike>
+                    {% endif %}
+                    {{ task.item }} | {{ task.dueDate }}
+                    {% if task.done %}
+                </strike>
+                {% endif %}
+                | {{ tasks[0].taskList.username }} |
+                <a href="/update/{{ task.id }}">Update/Edit</a>
+                <a href="/done/{{ task.id }}">Done</a>
+                <a href="/delete/{{ task.id }}">Delete</a>
+            </li>
+            {% endfor %}
+        </ol>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" href="{{url_for('logout')}}">Logout</a>
+        </li>
+
+    </div>
+</body>
+
 </html>
